@@ -1,4 +1,5 @@
 import {data} from './pro-congress-117-senate.mjs';
+import {states} from './state-hash.mjs';
 /* export const fetchJson= async(url) => {
  let response = await fetch("./pro-congress-117-senate.json");
  return response.json();
@@ -16,8 +17,7 @@ import {data} from './pro-congress-117-senate.mjs';
   });
  } */
 
-//TABLES
-
+//tables
  const members = data.results[0].members;
  
  const createTable = (array) => {
@@ -53,7 +53,6 @@ import {data} from './pro-congress-117-senate.mjs';
  
  createTable(members);
  let checked_nodeList = document.querySelectorAll("input[type=checkbox]");
- let check = [];
  
  const parties = {
   R: "Republicans",
@@ -61,17 +60,26 @@ import {data} from './pro-congress-117-senate.mjs';
   ID: "Independents"
  }
 
- 
-//FILTER TABLES
+//filter by states
+ const dropdownmenuStates = (objects) => {
+  const fullstates = Object.entries(objects);
+  let selectmenu = document.getElementById("dm-states");
+  fullstates.forEach(state => {
+    let option = document.createElement("option");
+    option.value = state[0];
+    option.text = state[1];
+    selectmenu.appendChild(option);
+    console.log(option.value);
+  })
+}
 
+dropdownmenuStates(states);
+
+//filter tables
 const checkedbox = (array) => {
-  check = Array.from(checked_nodeList) //converts checked_array that is a node list to an array
-            .filter(i=>i.checked) //filter the checked ones
-            .map(i=>i.value); //create a new array with the values of the checked ones
-  console.log(check, 'check') 
   let filtered_array = []; //array we are gonna fill with filtered members
   array.forEach(element => { //we use forEach method to check every element of the array members with the condition below
-    if (check.includes(element.party)) {
+    if (enabledSettings.includes(element.party)) {
       filtered_array.push(element);
   }
 })
@@ -79,7 +87,7 @@ return createTable(filtered_array);
 }
 
 
-//SELECTED CHECKBOX
+//selected checkboxes
 let enabledSettings = []
 const allEventListener = (array) => {
 // Use Array.forEach to add an event listener to each checkbox.
@@ -89,8 +97,7 @@ checked_nodeList.forEach(function(checkbox) {
       Array.from(checked_nodeList) // Convert checkboxes to an array to use filter and map.
       .filter(i => i.checked) // Use Array.filter to remove unchecked checkboxes.
       .map(i => i.value) // Use Array.map to extract only the checkbox values from the array of objects.
-      console.log(enabledSettings,)
-    
+
     checkedbox(members);
   })
 });
