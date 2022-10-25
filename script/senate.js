@@ -19,7 +19,13 @@ import {states} from './state-hash.mjs';
 
 //tables
  const members = data.results[0].members;
+
+ //select html element 
+ let selectmenu = document.getElementById("dm-states");
+
+
  
+
  const createTable = (array) => {
   document.getElementById("tbody").innerHTML = "";
   for(let i=0;i<array.length;i++) {
@@ -54,35 +60,54 @@ import {states} from './state-hash.mjs';
  createTable(members);
  let checked_nodeList = document.querySelectorAll("input[type=checkbox]");
  
- const parties = {
-  R: "Republicans",
-  D: "Democrats",
-  ID: "Independents"
- }
+ 
 
 //filter by states
  const dropdownmenuStates = (objects) => {
   const fullstates = Object.entries(objects);
-  let selectmenu = document.getElementById("dm-states");
+  
   fullstates.forEach(state => {
     let option = document.createElement("option");
     option.value = state[0];
     option.text = state[1];
     selectmenu.appendChild(option);
-    console.log(option.value);
   })
 }
 
 dropdownmenuStates(states);
 
 //filter tables
-const checkedbox = (array) => {
-  let filtered_array = []; //array we are gonna fill with filtered members
-  array.forEach(element => { //we use forEach method to check every element of the array members with the condition below
-    if (enabledSettings.includes(element.party)) {
-      filtered_array.push(element);
+const totalFilteredarray = (array) => {
+  let filtered_array = [];
+  let state = selectmenu.value;
+  console.log(enabledSettings,'setting');//array we are gonna fill with filtered members
+
+  //just dropdown menu
+  if(enabledSettings.length === 0 && selectmenu.value === "All states") {
+    filtered_array = array;
   }
-})
+  else {
+    array.forEach(element => { //we use forEach method to check every element of the array members with the conditions below
+      if(enabledSettings.length === 0 && selectmenu.value !== "All states") {
+        if (element.state == state) {
+          console.log(element.state,'states')
+          filtered_array.push(element);
+        }
+    }
+      else if (enabledSettings.length !== 0 && selectmenu.value === "All states"){
+      if(enabledSettings.includes(element.party)) {
+        filtered_array.push(element);
+      }
+  }
+      else {
+        
+          if(enabledSettings.includes(element.party) && element.state == state) {
+            filtered_array.push(element); 
+        }
+      }
+  })
+  }
+
 return createTable(filtered_array);
 }
 
@@ -90,15 +115,21 @@ return createTable(filtered_array);
 //selected checkboxes
 let enabledSettings = []
 const allEventListener = (array) => {
-// Use Array.forEach to add an event listener to each checkbox.
-checked_nodeList.forEach(function(checkbox) {
+
+selectmenu.addEventListener('change',(event)=> {
+  let selected = event.target.value;
+  let state_arr = array.filter(x=>x.state === selected)
+  totalFilteredarray(members);
+});
+
+checked_nodeList.forEach(function(checkbox) {// use Array.forEach to add an event listener to each checkbox.
   checkbox.addEventListener('change', function() {
     enabledSettings = 
       Array.from(checked_nodeList) // Convert checkboxes to an array to use filter and map.
       .filter(i => i.checked) // Use Array.filter to remove unchecked checkboxes.
       .map(i => i.value) // Use Array.map to extract only the checkbox values from the array of objects.
 
-    checkedbox(members);
+    totalFilteredarray(members);
   })
 });
 }
