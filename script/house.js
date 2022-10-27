@@ -1,4 +1,4 @@
-import {data} from './pro-congress-117-senate.mjs';
+import {data_house} from './pro-congress-117-house.mjs';
 import {states} from './state-hash.mjs';
 /* export const fetchJson= async(url) => {
  let response = await fetch("./pro-congress-117-senate.json");
@@ -18,7 +18,7 @@ import {states} from './state-hash.mjs';
  } */
 
 //tables
- const members = data.results[0].members;
+ const members = data_house.results[0].members;
 
  //select html element 
  let selectmenu = document.getElementById("dm-states");
@@ -133,9 +133,3 @@ checked_nodeList.forEach(function(checkbox) {// use Array.forEach to add an even
 });
 }
 allEventListener(members);
-
-
-
-
-
-
