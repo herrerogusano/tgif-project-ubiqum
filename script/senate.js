@@ -79,8 +79,7 @@ dropdownmenuStates(states);
 //filter tables
 const totalFilteredarray = (array) => {
   let filtered_array = [];
-  let state = selectmenu.value;
-  console.log(enabledSettings,'setting');//array we are gonna fill with filtered members
+  let state = selectmenu.value;//array we are gonna fill with filtered members
 
   //just dropdown menu
   if(enabledSettings.length === 0 && selectmenu.value === "All states") {
