@@ -89,7 +89,6 @@ const totalFilteredarray = (array) => {
     array.forEach(element => { //we use forEach method to check every element of the array members with the conditions below
       if(enabledSettings.length === 0 && selectmenu.value !== "All states") {
         if (element.state == state) {
-          console.log(element.state,'states')
           filtered_array.push(element);
         }
     }

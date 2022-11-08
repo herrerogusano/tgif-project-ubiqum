@@ -1,11 +1,6 @@
-import { data_house } from "./pro-congress-117-house.mjs";
+import { data } from "./pro-congress-117-senate.mjs";
 
-const members = data_house.results[0].members;
-
-
-
-/* let mostMissedvotes = members.sort((a,b)=>(a.missed_votes-b.missed_votes));
-let leastMissedvotes = members.sort((a,b)=>(b.missed_votes-a.missed_votes)); */
+const members = data.results[0].members;
 
 //create table
 
