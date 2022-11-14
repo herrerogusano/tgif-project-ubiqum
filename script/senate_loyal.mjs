@@ -1,6 +1,6 @@
-import {data_house} from "./pro-congress-117-house.mjs"
+import {data} from "./pro-congress-117-senate.mjs"
 
-let members = data_house.results[0].members;
+let members = data.results[0].members;
 
 
 
