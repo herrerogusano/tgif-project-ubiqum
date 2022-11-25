@@ -1,4 +1,4 @@
-import {data} from './pro-congress-117-senate.mjs';
+import {data_house} from './pro-congress-117-house.mjs';
 import {states} from './state-hash.mjs';
 /* export const fetchJson= async(url) => {
  let response = await fetch("./pro-congress-117-senate.json");
@@ -18,7 +18,7 @@ import {states} from './state-hash.mjs';
  } */
 
 //tables
- const members = data.results[0].members;
+ const members = data_house.results[0].members;
 
  //select html element 
  let selectmenu = document.getElementById("dm-states");
@@ -79,7 +79,8 @@ dropdownmenuStates(states);
 //filter tables
 const totalFilteredarray = (array) => {
   let filtered_array = [];
-  let state = selectmenu.value;//array we are gonna fill with filtered members
+  let state = selectmenu.value;
+  console.log(enabledSettings,'setting');//array we are gonna fill with filtered members
 
   //just dropdown menu
   if(enabledSettings.length === 0 && selectmenu.value === "All states") {
@@ -89,6 +90,7 @@ const totalFilteredarray = (array) => {
     array.forEach(element => { //we use forEach method to check every element of the array members with the conditions below
       if(enabledSettings.length === 0 && selectmenu.value !== "All states") {
         if (element.state == state) {
+          console.log(element.state,'states')
           filtered_array.push(element);
         }
     }
@@ -131,9 +133,3 @@ checked_nodeList.forEach(function(checkbox) {// use Array.forEach to add an even
 });
 }
 allEventListener(members);
-
-
-
-
-
-
